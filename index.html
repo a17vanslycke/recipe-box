@@ -29,14 +29,12 @@
     .view{display:none;flex-direction:column;flex:1;overflow:hidden}
     .view.active{display:flex}
 
-    /* loading */
     #loading{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;z-index:100}
     #loading.hidden{display:none}
     .spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--sage);border-radius:50%;animation:spin 0.7s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
     #loading p{font-size:12px;color:var(--muted);letter-spacing:0.05em}
 
-    /* list */
     #list-view .list-header{padding:calc(var(--safe-top) + 20px) 20px 16px;display:flex;align-items:flex-end;justify-content:space-between;flex-shrink:0;border-bottom:1px solid var(--border)}
     .list-header h1{font-size:26px;font-weight:600;letter-spacing:-0.03em;color:var(--text);line-height:1}
     .list-header .sub{font-size:11px;color:var(--muted);font-weight:400;letter-spacing:0.05em;text-transform:uppercase;margin-top:3px}
@@ -57,7 +55,6 @@
     .meta-lbl{font-size:8px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted)}
     .meta-val{font-size:12px;color:var(--text2)}
 
-    /* detail */
     #detail-view .detail-header{padding:calc(var(--safe-top) + 14px) 16px 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);flex-shrink:0}
     .btn-back{background:none;border:none;color:var(--sage);font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;padding:0;flex-shrink:0}
     .detail-title-wrap{flex:1;min-width:0}
@@ -84,7 +81,6 @@
     .btn-delete{margin:0 18px 18px;padding:11px;background:none;border:1px solid var(--danger);color:var(--danger);font-family:'IBM Plex Sans',sans-serif;font-size:13px;border-radius:var(--radius);cursor:pointer;flex-shrink:0;transition:background 0.15s}
     .btn-delete:active{background:rgba(176,96,96,0.1)}
 
-    /* form */
     #form-view .form-header{padding:calc(var(--safe-top) + 14px) 16px 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);flex-shrink:0}
     .form-header h2{font-size:17px;font-weight:600;letter-spacing:-0.02em;flex:1}
     .btn-save{background:var(--sage);border:none;color:#0a0a0a;font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:600;padding:7px 16px;border-radius:20px;cursor:pointer;letter-spacing:0.02em;transition:background 0.15s,transform 0.1s}
@@ -114,7 +110,6 @@
     .step-form-n{width:22px;height:22px;border-radius:50%;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--sage);flex-shrink:0;margin-top:9px}
     .step-form-row textarea{flex:1;min-height:58px}
 
-    /* toast */
     #toast{position:fixed;bottom:calc(var(--safe-bot) + 20px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--surface3);border:1px solid var(--border2);color:var(--text);font-size:12px;padding:9px 18px;border-radius:30px;opacity:0;transition:opacity 0.2s,transform 0.2s;pointer-events:none;white-space:nowrap;z-index:999}
     #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
     ::-webkit-scrollbar{width:0}
@@ -200,18 +195,23 @@
 <div id="toast"></div>
 
 <script>
-  // ── PASTE YOUR APPS SCRIPT URL HERE ──
-  const API_URL = 'https://script.google.com/macros/s/AKfycbzfrshUCgZX52Ju62rCUKGODoxJ31KDjjucmr1jQU6ukALghx6kBLLIwy7Vm2qHpuvQ/exec';
+  // ── PASTE YOUR APPS SCRIPT WEB APP URL HERE ──
+  const API_URL = 'https://script.google.com/macros/s/AKfycbxlcOvoITKDSlwrjb3FBn4mQ5_Wk7glUXKT1_mviRQTIuZPQqrtaSsvpwfpG-Ftpk0/exec';
 
   let recipes = [], currentId = null, editingId = null;
 
-  // ── INIT ──
   window.addEventListener('DOMContentLoaded', loadRecipes);
+
+  async function api(params) {
+    const url = API_URL + '?' + new URLSearchParams(params).toString();
+    const res = await fetch(url);
+    return res.json();
+  }
 
   async function loadRecipes() {
     try {
-      const res = await fetch(`${API_URL}?action=getRecipes`);
-      recipes = await res.json();
+      const data = await api({ action: 'getRecipes' });
+      recipes = Array.isArray(data) ? data : [];
       renderList();
     } catch (e) {
       toast('Failed to load — check your connection');
@@ -221,7 +221,6 @@
     }
   }
 
-  // ── VIEWS ──
   function showView(id) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.getElementById(id).classList.add('active');
@@ -234,7 +233,6 @@
     setTimeout(() => t.classList.remove('show'), 2400);
   }
 
-  // ── LIST ──
   function renderList() {
     const sorted = [...recipes].sort((a, b) => b.createdAt - a.createdAt);
     const el = document.getElementById('recipe-list');
@@ -260,7 +258,6 @@
     }).join('');
   }
 
-  // ── DETAIL ──
   function openDetail(id) {
     const r = recipes.find(x => x.id === id);
     if (!r) return;
@@ -289,12 +286,11 @@
     showView('detail-view');
   }
 
-  // ── DELETE ──
   async function deleteCurrentRecipe() {
     if (!currentId || !confirm('Delete this recipe?')) return;
     const id = currentId;
     try {
-      await fetch(`${API_URL}?action=deleteRecipe&id=${id}`);
+      await api({ action: 'deleteRecipe', id });
       recipes = recipes.filter(r => r.id !== id);
       currentId = null;
       renderList();
@@ -305,7 +301,6 @@
     }
   }
 
-  // ── FORM ──
   function openNewForm() {
     editingId = null;
     document.getElementById('form-title').textContent = 'New Recipe';
@@ -392,10 +387,7 @@
     const btn = document.getElementById('btn-save');
     btn.disabled = true; btn.textContent = 'Saving\u2026';
     try {
-      await fetch(API_URL, {
-        method: 'POST',
-        body: JSON.stringify({ action: 'saveRecipe', recipe }),
-      });
+      await api({ action: 'saveRecipe', recipe: encodeURIComponent(JSON.stringify(recipe)) });
       if (editingId) recipes = recipes.map(r => r.id === editingId ? recipe : r);
       else recipes.push(recipe);
       renderList();
@@ -427,7 +419,9 @@
       if (up === 'STEPS')             { mode = 'steps'; return; }
       if (mode === 'ing') {
         const parts = line.split('|');
-        ingredients.push(parts.length >= 2 ? { amt: parts[0].trim(), name: parts.slice(1).join('|').trim() } : { amt: '', name: line.replace(/^[-•]\s*/,'') });
+        ingredients.push(parts.length >= 2
+          ? { amt: parts[0].trim(), name: parts.slice(1).join('|').trim() }
+          : { amt: '', name: line.replace(/^[-•]\s*/,'') });
       }
       if (mode === 'steps') {
         const cleaned = line.replace(/^\d+[\.\)]\s*/,'').trim();
