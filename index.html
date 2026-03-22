@@ -203,10 +203,12 @@
   window.addEventListener('DOMContentLoaded', loadRecipes);
 
   async function api(params) {
-    const url = API_URL + '?' + new URLSearchParams(params).toString();
-    const res = await fetch(url);
-    return res.json();
-  }
+  const url = API_URL + '?' + new URLSearchParams(params).toString();
+  const res = await fetch(url, { redirect: 'follow' });
+  const text = await res.text();
+  try { return JSON.parse(text); }
+  catch { return { error: text }; }
+}
 
   async function loadRecipes() {
     try {
