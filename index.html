@@ -29,27 +29,23 @@
     .view{display:none;flex-direction:column;flex:1;overflow:hidden}
     .view.active{display:flex}
 
-    /* loading */
     #loading{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;z-index:100}
     #loading.hidden{display:none}
     .spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--sage);border-radius:50%;animation:spin 0.7s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
     #loading p{font-size:12px;color:var(--muted);letter-spacing:0.05em}
 
-    /* shared header */
     .view-header{padding:calc(var(--safe-top) + 20px) 20px 14px;display:flex;align-items:flex-end;justify-content:space-between;flex-shrink:0;border-bottom:1px solid var(--border)}
     .view-header h1{font-size:26px;font-weight:600;letter-spacing:-0.03em;color:var(--text);line-height:1}
     .view-header .sub{font-size:11px;color:var(--muted);font-weight:400;letter-spacing:0.05em;text-transform:uppercase;margin-top:3px}
     .btn-add{width:38px;height:38px;border-radius:50%;background:var(--sage);border:none;color:#0a0a0a;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:300;line-height:1;flex-shrink:0;transition:background 0.15s,transform 0.1s}
     .btn-add:active{transform:scale(0.92);background:var(--sage2)}
 
-    /* search bar */
     .search-wrap{padding:10px 14px;flex-shrink:0;border-bottom:1px solid var(--border)}
     .search-wrap input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:14px;padding:9px 12px;outline:none;transition:border-color 0.15s}
     .search-wrap input:focus{border-color:var(--sage)}
     .search-wrap input::placeholder{color:var(--muted)}
 
-    /* ── CATEGORIES VIEW ── */
     #cat-view .cat-scroll{flex:1;overflow-y:auto;padding:12px 14px calc(var(--safe-bot) + 16px);display:flex;flex-direction:column;gap:8px}
     .cat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:background 0.12s,transform 0.1s;display:flex;align-items:center;justify-content:space-between;animation:fadeUp 0.25s ease both}
     .cat-card:active{transform:scale(0.985);background:var(--surface2)}
@@ -57,10 +53,9 @@
     .cat-card.all-recipes{border-color:rgba(125,158,125,0.3);background:var(--sage-bg)}
     .cat-name{font-size:16px;font-weight:500;color:var(--text);letter-spacing:-0.01em}
     .cat-card.all-recipes .cat-name{color:var(--sage2)}
-    .cat-count{font-size:12px;color:var(--muted);font-weight:400}
+    .cat-count{font-size:12px;color:var(--muted);font-weight:400;margin-top:2px}
     .cat-chevron{color:var(--muted);font-size:1rem;flex-shrink:0}
 
-    /* ── RECIPE LIST VIEW ── */
     #list-view .list-header{padding:calc(var(--safe-top) + 14px) 16px 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);flex-shrink:0}
     .btn-back{background:none;border:none;color:var(--sage);font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;padding:0;flex-shrink:0}
     .list-title-wrap{flex:1;min-width:0}
@@ -70,7 +65,6 @@
     .empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);text-align:center;padding:40px 24px}
     .empty-state p{font-size:13px;line-height:1.7;font-weight:300}
 
-    /* recipe cards */
     .recipe-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:13px 15px;cursor:pointer;transition:background 0.12s,transform 0.1s;animation:fadeUp 0.25s ease both}
     .recipe-card:active{transform:scale(0.985);background:var(--surface2)}
     .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:9px}
@@ -81,7 +75,6 @@
     .meta-lbl{font-size:8px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted)}
     .meta-val{font-size:12px;color:var(--text2)}
 
-    /* ── DETAIL VIEW ── */
     #detail-view .detail-header{padding:calc(var(--safe-top) + 14px) 16px 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);flex-shrink:0}
     .detail-title-wrap{flex:1;min-width:0}
     .detail-tag-line{font-size:9px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--sage);margin-bottom:2px}
@@ -107,7 +100,6 @@
     .btn-delete{margin:0 18px 18px;padding:11px;background:none;border:1px solid var(--danger);color:var(--danger);font-family:'IBM Plex Sans',sans-serif;font-size:13px;border-radius:var(--radius);cursor:pointer;flex-shrink:0;transition:background 0.15s}
     .btn-delete:active{background:rgba(176,96,96,0.1)}
 
-    /* ── FORM VIEW ── */
     #form-view .form-header{padding:calc(var(--safe-top) + 14px) 16px 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);flex-shrink:0}
     .form-header h2{font-size:17px;font-weight:600;letter-spacing:-0.02em;flex:1}
     .btn-save{background:var(--sage);border:none;color:#0a0a0a;font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:600;padding:7px 16px;border-radius:20px;cursor:pointer;letter-spacing:0.02em;transition:background 0.15s,transform 0.1s}
@@ -137,7 +129,6 @@
     .step-form-n{width:22px;height:22px;border-radius:50%;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--sage);flex-shrink:0;margin-top:9px}
     .step-form-row textarea{flex:1;min-height:58px}
 
-    /* toast */
     #toast{position:fixed;bottom:calc(var(--safe-bot) + 20px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--surface3);border:1px solid var(--border2);color:var(--text);font-size:12px;padding:9px 18px;border-radius:30px;opacity:0;transition:opacity 0.2s,transform 0.2s;pointer-events:none;white-space:nowrap;z-index:999}
     #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
     ::-webkit-scrollbar{width:0}
@@ -161,9 +152,7 @@
     <div class="search-wrap">
       <input type="search" id="cat-search" placeholder="Search all recipes…" oninput="onCatSearch(this.value)" autocomplete="off" />
     </div>
-    <!-- search results (hidden until typing) -->
     <div id="cat-search-results" style="display:none;flex:1;overflow-y:auto;padding:12px 14px calc(var(--safe-bot)+16px);flex-direction:column;gap:8px"></div>
-    <!-- category cards -->
     <div class="cat-scroll" id="cat-list"></div>
   </div>
 
@@ -186,7 +175,7 @@
   <!-- DETAIL -->
   <div id="detail-view" class="view">
     <div class="detail-header">
-      <button class="btn-back" id="detail-back-btn" onclick="goBackFromDetail()">&#8249; Back</button>
+      <button class="btn-back" onclick="goBackFromDetail()">&#8249; Back</button>
       <div class="detail-title-wrap">
         <div class="detail-tag-line" id="d-tag"></div>
         <div class="detail-name" id="d-name"></div>
@@ -219,7 +208,7 @@
       <div class="or-rule">or fill manually</div>
       <div class="fg"><label>Recipe Name *</label><input type="text" id="f-name" placeholder="e.g. Smoked Chicken Wings" autocomplete="off" /></div>
       <div class="form-row">
-        <div class="fg"><label>Tag</label><input type="text" id="f-tag" placeholder="e.g. Smoking" autocomplete="off" /></div>
+        <div class="fg"><label>Tag</label><input type="text" id="f-tag" placeholder="e.g. Smoking, Baking" autocomplete="off" /></div>
         <div class="fg"><label>Servings</label><input type="text" id="f-servings" placeholder="4" autocomplete="off" /></div>
       </div>
       <div class="form-row">
@@ -283,16 +272,22 @@
     setTimeout(() => t.classList.remove('show'), 2400);
   }
 
+  function getTags(r) {
+    return (r.tag && r.tag.trim())
+      ? r.tag.split(',').map(t => t.trim()).filter(Boolean)
+      : ['Uncategorized'];
+  }
+
   // ── CATEGORIES ──
   function renderCategories() {
     const total = recipes.length;
     document.getElementById('cat-total').textContent = `${total} recipe${total !== 1 ? 's' : ''}`;
 
-    // gather unique tags
     const tagMap = {};
     recipes.forEach(r => {
-      const tag = (r.tag && r.tag.trim()) ? r.tag.trim() : 'Uncategorized';
-      tagMap[tag] = (tagMap[tag] || 0) + 1;
+      getTags(r).forEach(tag => {
+        tagMap[tag] = (tagMap[tag] || 0) + 1;
+      });
     });
 
     const tags = Object.keys(tagMap).sort();
@@ -338,10 +333,9 @@
   function openCategory(tag) {
     currentCategory = tag;
     document.getElementById('list-search').value = '';
-    const filtered = tag === '__all__' ? recipes : recipes.filter(r => {
-      const t = (r.tag && r.tag.trim()) ? r.tag.trim() : 'Uncategorized';
-      return t === tag;
-    });
+    const filtered = tag === '__all__'
+      ? recipes
+      : recipes.filter(r => getTags(r).includes(tag));
     document.getElementById('list-title').textContent = tag === '__all__' ? 'All Recipes' : tag;
     document.getElementById('list-sub').textContent = `${filtered.length} recipe${filtered.length !== 1 ? 's' : ''}`;
     renderRecipeList(filtered);
@@ -351,10 +345,9 @@
 
   // ── LIST SEARCH ──
   function onListSearch(q) {
-    const base = currentCategory === '__all__' ? recipes : recipes.filter(r => {
-      const t = (r.tag && r.tag.trim()) ? r.tag.trim() : 'Uncategorized';
-      return t === currentCategory;
-    });
+    const base = currentCategory === '__all__'
+      ? recipes
+      : recipes.filter(r => getTags(r).includes(currentCategory));
     const filtered = q.trim()
       ? base.filter(r => r.name.toLowerCase().includes(q.toLowerCase()))
       : base;
@@ -392,9 +385,7 @@
     const r = recipes.find(x => x.id === id);
     if (!r) return;
     currentId = id;
-    // track where to go back
     prevView = document.querySelector('.view.active').id;
-
     document.getElementById('d-tag').textContent = r.tag || '';
     document.getElementById('d-name').textContent = r.name;
     const metas = [['Prep',r.prep],['Cook',r.cook],['Serves',r.servings]].filter(([,v])=>v);
@@ -420,11 +411,7 @@
   }
 
   function goBackFromDetail() {
-    if (prevView === 'list-view') {
-      showView('list-view');
-    } else {
-      showView('cat-view');
-    }
+    showView(prevView === 'list-view' ? 'list-view' : 'cat-view');
   }
 
   // ── DELETE ──
@@ -436,9 +423,7 @@
       recipes = recipes.filter(r => r.id !== id);
       currentId = null;
       renderCategories();
-      if (currentCategory) openCategory(currentCategory);
-      showView('list-view');
-      if (currentCategory === null) showView('cat-view');
+      showView('cat-view');
       toast('Recipe deleted');
     } catch (e) {
       toast('Delete failed — try again');
@@ -448,6 +433,7 @@
   // ── FORM ──
   function openNewForm() {
     editingId = null;
+    prevView = document.querySelector('.view.active').id;
     document.getElementById('form-title').textContent = 'New Recipe';
     clearForm();
     addIngRow(); addIngRow();
@@ -473,7 +459,8 @@
   }
 
   function cancelForm() {
-    showView(prevView === 'list-view' ? 'list-view' : editingId ? 'detail-view' : 'cat-view');
+    if (editingId) { showView('detail-view'); }
+    else { showView(prevView || 'cat-view'); }
   }
 
   function clearForm() {
